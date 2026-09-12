@@ -1,0 +1,7 @@
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { X, Trash2 } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+
+export default function CartDrawer(){ const {items,total,open,setOpen,dispatch}=useCart(); if(!open)return null; return <><div className="drawer-backdrop" onClick={()=>setOpen(false)}/><aside className="drawer" role="dialog" aria-modal="true" aria-label="Shopping cart"><button className="drawer-close" onClick={()=>setOpen(false)} aria-label="Close cart"><X/></button><h2>Your basket</h2>{items.length===0?<p>Your basket is waiting for something delicious.</p>:items.map(item=><div className="cart-line" key={item.id}><Image src={`/${item.image}`} alt={item.name} width={58} height={58}/><div><strong>{item.name}</strong><div>${item.price.toFixed(2)} each</div><div className="quantity"><button onClick={()=>dispatch({type:'update',id:item.id,quantity:item.quantity-1})}>−</button><span>{item.quantity}</span><button onClick={()=>dispatch({type:'update',id:item.id,quantity:item.quantity+1})}>+</button></div></div><button className="drawer-close" onClick={()=>dispatch({type:'remove',id:item.id})} aria-label={`Remove ${item.name}`}><Trash2 size={17}/></button></div>)}<div className="total"><span>Total</span><span>${total.toFixed(2)}</span></div><Link className="button" style={{display:'block',textAlign:'center'}} href="/checkout" onClick={()=>setOpen(false)}>Proceed to checkout</Link></aside></>; }

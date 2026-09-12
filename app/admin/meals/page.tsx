@@ -1,0 +1,1 @@
+export default function AdminMeals(){return <section className="shell form-page"><span className="kicker">Admin · catalog</span><h1 style={{fontSize:'clamp(2.5rem,6vw,5rem)'}}>Shape the menu.</h1><div className="notice">The admin API supports authenticated meal creation, editing, and deletion. Connect MongoDB to manage the production catalog.</div></section>}
