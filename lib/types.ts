@@ -1,3 +1,17 @@
+export const ORDER_STATUSES = [
+  "pending",
+  "preparing",
+  "out-for-delivery",
+  "delivered",
+] as const;
+export type OrderStatus = (typeof ORDER_STATUSES)[number];
+export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
+  pending: "Pending",
+  preparing: "Preparing",
+  "out-for-delivery": "Out for delivery",
+  delivered: "Delivered",
+};
+
 export type Meal = {
   id: string;
   name: string;
@@ -21,10 +35,13 @@ export type Customer = {
 
 export type Order = {
   id: string;
+  userId?: string;
   items: CartItem[];
   customer: Customer;
   total: number;
-  status: 'pending' | 'preparing' | 'out-for-delivery' | 'delivered';
-  paymentStatus: 'pending' | 'paid' | 'failed';
+  discount?: number;
+  promoCode?: string;
+  status: OrderStatus;
+  paymentStatus: "pending" | "paid" | "failed";
   createdAt: string;
 };

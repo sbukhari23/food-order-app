@@ -1,4 +1,72 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-export default function Register(){const [error,setError]=useState('');const [done,setDone]=useState(false);return <section className="shell form-page" style={{maxWidth:560}}><span className="kicker">Make it yours</span><h1 style={{fontSize:'clamp(2.5rem,6vw,5rem)'}}>Keep your favorites close.</h1>{done?<div className="panel"><p>Account created. You can sign in now.</p><Link href="/login" className="button">Sign in</Link></div>:<form className="panel" onSubmit={async(event)=>{event.preventDefault();const data=new FormData(event.currentTarget);const response=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(data))});const body=await response.json();if(!response.ok)setError(body.error);else setDone(true);}}><div className="field"><label htmlFor="name">Name</label><input className="input" id="name" name="name" required/></div><div className="field" style={{marginTop:'1rem'}}><label htmlFor="email">Email</label><input className="input" id="email" name="email" type="email" required/></div><div className="field" style={{marginTop:'1rem'}}><label htmlFor="password">Password</label><input className="input" id="password" name="password" type="password" minLength={8} required/></div>{error&&<p className="error-text">{error}</p>}<button className="button" style={{marginTop:'1rem'}}>Create account</button></form>}<p className="muted">Already have an account? <Link href="/login">Sign in</Link></p></section>}
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+export default function Register() {
+  const [error, setError] = useState("");
+  const [done, setDone] = useState(false);
+  return (
+    <section className="shell form-page" style={{ maxWidth: 560 }}>
+      <span className="kicker">Make it yours</span>
+      <h1 style={{ fontSize: "clamp(2.5rem,6vw,5rem)" }}>
+        Keep your favorites close.
+      </h1>
+      {done ? (
+        <div className="panel">
+          <p>Account created. You can sign in now.</p>
+          <Link href="/login" className="button">
+            Sign in
+          </Link>
+        </div>
+      ) : (
+        <form
+          className="panel"
+          onSubmit={async (event) => {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            const response = await fetch("/api/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(Object.fromEntries(data)),
+            });
+            const body = await response.json();
+            if (!response.ok) setError(body.error);
+            else setDone(true);
+          }}
+        >
+          <div className="field">
+            <label htmlFor="name">Name</label>
+            <input className="input" id="name" name="name" required />
+          </div>
+          <div className="field" style={{ marginTop: "1rem" }}>
+            <label htmlFor="email">Email</label>
+            <input
+              className="input"
+              id="email"
+              name="email"
+              type="email"
+              required
+            />
+          </div>
+          <div className="field" style={{ marginTop: "1rem" }}>
+            <label htmlFor="password">Password</label>
+            <input
+              className="input"
+              id="password"
+              name="password"
+              type="password"
+              minLength={8}
+              required
+            />
+          </div>
+          {error && <p className="error-text">{error}</p>}
+          <button className="button" style={{ marginTop: "1rem" }}>
+            Create account
+          </button>
+        </form>
+      )}
+      <p className="muted">
+        Already have an account? <Link href="/login">Sign in</Link>
+      </p>
+    </section>
+  );
+}

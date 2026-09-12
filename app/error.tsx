@@ -1,2 +1,20 @@
-'use client';
-export default function ErrorPage({reset}:{error:Error&{digest?:string};reset:()=>void}){return <section className="shell form-page"><span className="kicker">Something went wrong</span><h1 style={{fontSize:'clamp(3rem,8vw,6rem)'}}>The kitchen hit a snag.</h1><p className="lede">Nothing was lost. Try that request again.</p><button className="button" onClick={reset}>Try again</button></section>}
+"use client";
+export default function ErrorPage({
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    <section className="shell form-page">
+      <span className="kicker">Something went wrong</span>
+      <h1 style={{ fontSize: "clamp(3rem,8vw,6rem)" }}>
+        The kitchen hit a snag.
+      </h1>
+      <p className="lede">Nothing was lost. Try that request again.</p>
+      <button className="button" onClick={reset}>
+        Try again
+      </button>
+    </section>
+  );
+}

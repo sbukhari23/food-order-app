@@ -1,6 +1,58 @@
-'use client';
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-export default function Login(){const [error,setError]=useState('');const router=useRouter();return <section className="shell form-page" style={{maxWidth:560}}><span className="kicker">Welcome back</span><h1 style={{fontSize:'clamp(2.5rem,6vw,5rem)'}}>Come hungry.</h1><form className="panel" onSubmit={async(event)=>{event.preventDefault();const data=new FormData(event.currentTarget);const result=await signIn('credentials',{email:data.get('email'),password:data.get('password'),redirect:false});if(result?.error)setError('Those details did not match an account.');else router.push('/account');}}><div className="field"><label htmlFor="email">Email</label><input className="input" id="email" name="email" type="email" required/></div><div className="field" style={{marginTop:'1rem'}}><label htmlFor="password">Password</label><input className="input" id="password" name="password" type="password" required/></div>{error&&<p className="error-text">{error}</p>}<button className="button" style={{marginTop:'1rem'}}>Sign in</button></form><p className="muted">New here? <Link href="/register">Create an account</Link></p></section>}
+"use client";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+export default function Login() {
+  const [error, setError] = useState("");
+  const router = useRouter();
+  return (
+    <section className="shell form-page" style={{ maxWidth: 560 }}>
+      <span className="kicker">Welcome back</span>
+      <h1 style={{ fontSize: "clamp(2.5rem,6vw,5rem)" }}>Come hungry.</h1>
+      <form
+        className="panel"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const data = new FormData(event.currentTarget);
+          const result = await signIn("credentials", {
+            email: data.get("email"),
+            password: data.get("password"),
+            redirect: false,
+          });
+          if (result?.error)
+            setError("Those details did not match an account.");
+          else router.push("/account");
+        }}
+      >
+        <div className="field">
+          <label htmlFor="email">Email</label>
+          <input
+            className="input"
+            id="email"
+            name="email"
+            type="email"
+            required
+          />
+        </div>
+        <div className="field" style={{ marginTop: "1rem" }}>
+          <label htmlFor="password">Password</label>
+          <input
+            className="input"
+            id="password"
+            name="password"
+            type="password"
+            required
+          />
+        </div>
+        {error && <p className="error-text">{error}</p>}
+        <button className="button" style={{ marginTop: "1rem" }}>
+          Sign in
+        </button>
+      </form>
+      <p className="muted">
+        New here? <Link href="/register">Create an account</Link>
+      </p>
+    </section>
+  );
+}

@@ -39,6 +39,7 @@ lerna-debug.log*
 
 # ── Test / coverage ───────────────────────────
 coverage
+test-results
 .nyc_output
 *.lcov
 

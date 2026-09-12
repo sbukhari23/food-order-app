@@ -28,4 +28,16 @@ In Stripe Dashboard, create a webhook endpoint for `https://YOUR_DOMAIN/api/webh
 
 ## Checks
 
-`npm run typecheck` runs strict TypeScript validation, `npm run lint` runs ESLint, `npm run test` runs Vitest, and `npm run build` creates the Vercel production build.
+`npm run typecheck` runs strict TypeScript validation, `npm run lint` runs ESLint, `npm run test` runs Vitest, `npm run e2e` runs Playwright browser journeys, and `npm run build` creates the Vercel production build. Set `NEXT_PUBLIC_FEATURE_PROMO_CODES`, `NEXT_PUBLIC_FEATURE_ADMIN_CHARTS`, or `NEXT_PUBLIC_FEATURE_PWA_PROMPT` to `true`/`false` to control settling features.
+
+## Architecture
+
+The App Router serves the storefront and server routes in one deployable process. Client components own cart/forms and call API routes; `lib/services` owns business rules; repository-shaped dependencies in the services keep pricing and persistence testable; Mongoose owns durable data; the payment provider interface isolates Stripe; Resend handles transactional email.
+
+## Common Issues
+
+Fonts are packaged locally with `@fontsource/lato` and `@fontsource/raleway`, so builds do not require access to Google Fonts. Stripe checkout and webhooks require the environment variables in `.env.local`. Without MongoDB, browsing can use seed fallback data, but order creation and payment intentionally require durable storage.
+
+## Contributing
+
+Use the local quickstart above, keep changes small and reviewable, and land one coherent change at a time. Brooks's Law applies here: more simultaneous, uncoordinated changes increase integration risk rather than making delivery faster. Run lint, typecheck, and tests before opening a pull request.
